@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ENEMS — Engineering × EMS Innovation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --red:       #c0201a;
+      --red-light: #e03228;
+      --red-pale:  #fdf0ef;
+      --cream:     #faf8f4;
+      --white:     #ffffff;
+      --charcoal:  #1c1c1e;
+      --slate:     #4a4a52;
+      --muted:     #8a8a96;
+      --border:    #e8e2d9;
+      --display:   'Playfair Display', Georgia, serif;
+      --sans:      'DM Sans', sans-serif;
+      --mono:      'DM Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─────────────── NAV ─────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      background: rgba(250,248,244,0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+
+    .nav-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 5%;
+    }
+
+    .nav-logo {
+      font-family: var(--display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .nav-logo span { color: var(--red); }
+
+    .nav-cta {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #fff;
+      background: var(--red);
+      border: none;
+      padding: 0.6rem 1.4rem;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--red-light); }
+
+    /* Tab bar */
+    .tab-bar {
+      display: flex;
+      align-items: center;
+      padding: 0 5%;
+      border-top: 1px solid var(--border);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .tab-bar::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--muted);
+      background: none;
+      border: none;
+      padding: 0.85rem 1.4rem;
+      cursor: pointer;
+      white-space: nowrap;
+      position: relative;
+      transition: color 0.2s;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+
+    .tab-btn:hover { color: var(--charcoal); }
+
+    .tab-btn.active {
+      color: var(--red);
+      font-weight: 500;
+      border-bottom: 2px solid var(--red);
+    }
+
+    /* ─────────────── PAGES ─────────────── */
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding-top: 105px; /* nav height */
+      animation: fadeIn 0.4s ease;
+    }
+
+    .page.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ─────────────── SHARED ─────────────── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 5%;
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 1rem;
+    }
+
+    .section-tag::before {
+      content: '';
+      display: block;
+      width: 20px; height: 2px;
+      background: var(--red);
+      border-radius: 2px;
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--charcoal);
+      margin-bottom: 1.4rem;
+    }
+
+    h1 em { font-style: italic; color: var(--red); }
+
+    h2 {
+      font-family: var(--display);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--charcoal);
+      margin-bottom: 1.2rem;
+    }
+
+    h2 em { font-style: italic; color: var(--red); }
+
+    h3 {
+      font-family: var(--display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 0.8rem;
+    }
+
+    p { color: var(--slate); line-height: 1.85; }
+
+    .lead {
+      font-size: 1.08rem;
+      color: var(--slate);
+      max-width: 600px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .img-block {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 16px 56px rgba(0,0,0,0.12);
+      line-height: 0;
+    }
+
+    .img-block img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .img-tall  { height: 460px; }
+    .img-med   { height: 340px; }
+    .img-short { height: 240px; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 3rem 0;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      display: inline-block;
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: #fff;
+      background: var(--red);
+      border: 2px solid var(--red);
+      padding: 0.9rem 2.2rem;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--red-light);
+      border-color: var(--red-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(192,32,26,0.25);
+    }
+
+    .btn-outline {
+      display: inline-block;
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      background: transparent;
+      border: 2px solid var(--border);
+      padding: 0.9rem 2.2rem;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-outline:hover { border-color: var(--charcoal); transform: translateY(-2px); }
+
+    /* Tags */
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--slate);
+      background: var(--cream);
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+    }
+
+    /* Card with red left border */
+    .bordered-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2.2rem;
+      position: relative;
+    }
+
+    .bordered-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: var(--red);
+      border-radius: 8px 0 0 8px;
+    }
+
+    .bordered-card h3 {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    /* List with arrow bullets */
+    .arrow-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .arrow-list li {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--slate);
+      line-height: 1.55;
+    }
+
+    .arrow-list li::before {
+      content: '→';
+      color: var(--red);
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+
+    /* ─────────────── HOME PAGE ─────────────── */
+    #page-home {
+      background: var(--cream);
+    }
+
+    .hero-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 5% 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px; height: 2px;
+      background: var(--red);
+      border-radius: 2px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2.2rem;
+    }
+
+    .hero-image-wrap {
+      position: relative;
+      height: 540px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.13);
+    }
+
+    .hero-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      background: rgba(250,248,244,0.96);
+      backdrop-filter: blur(8px);
+      border-radius: 8px;
+      padding: 1rem 1.4rem;
+      border-left: 3px solid var(--red);
+    }
+
+    .hero-badge strong {
+      display: block;
+      font-family: var(--display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+
+    .hero-badge span {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    /* Stats bar */
+    .stats-bar {
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2.5rem 5%;
+    }
+
+    .stats-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 4rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-num {
+      font-family: var(--display);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--red);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* Mini team cards on home */
+    .mini-cards {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 5%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .mini-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2.2rem;
+      cursor: pointer;
+      transition: box-shadow 0.25s, transform 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mini-card:hover {
+      box-shadow: 0 10px 40px rgba(0,0,0,0.09);
+      transform: translateY(-3px);
+    }
+
+    .mini-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--red);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s;
+    }
+
+    .mini-card:hover::after { transform: scaleX(1); }
+
+    .mini-card-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+    }
+
+    .mini-card h3 { font-size: 1.3rem; margin-bottom: 0.6rem; }
+    .mini-card p  { font-size: 0.88rem; line-height: 1.7; }
+
+    .mini-card-arrow {
+      margin-top: 1.2rem;
+      font-size: 0.8rem;
+      color: var(--red);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* ─────────────── ABOUT PAGE ─────────────── */
+    .about-intro {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 5% 3rem;
+    }
+
+    .about-intro h1 { max-width: 700px; }
+
+    .about-body {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 5% 5rem;
+    }
+
+    /* ─────────────── CONTACT PAGE ─────────────── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    form { display: flex; flex-direction: column; gap: 1.2rem; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+    label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--charcoal);
+    }
+
+    input, select, textarea {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      color: var(--charcoal);
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.8rem 1rem;
+      width: 100%;
+      outline: none;
+      appearance: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(192,32,26,0.1);
+    }
+
+    textarea { resize: vertical; min-height: 130px; }
+
+    .form-submit {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #fff;
+      background: var(--red);
+      border: 2px solid var(--red);
+      padding: 1rem 2.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: all 0.2s;
+    }
+
+    .form-submit:hover {
+      background: var(--red-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(192,32,26,0.25);
+    }
+
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--slate);
+      margin-bottom: 1rem;
+    }
+
+    .contact-detail svg { width: 18px; height: 18px; color: var(--red); flex-shrink: 0; }
+
+    /* ─────────────── QUOTE BANNER ─────────────── */
+    .quote-banner {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      height: 300px;
+      margin: 3rem 0;
+    }
+
+    .quote-banner img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+
+    .quote-banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(192,32,26,0.78) 0%, rgba(28,28,30,0.6) 100%);
+      display: flex;
+      align-items: center;
+      padding: 3rem;
+    }
+
+    .quote-banner blockquote {
+      font-family: var(--display);
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      font-style: italic;
+      color: #fff;
+      max-width: 650px;
+      line-height: 1.4;
+    }
+
+    /* ─────────────── VALUES GRID ─────────────── */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+      margin-top: 2rem;
+    }
+
+    .value-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .value-dot {
+      width: 8px; height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 0.55rem;
+    }
+
+    .value-item p { font-size: 0.88rem; color: var(--slate); line-height: 1.6; }
+
+    /* ─────────────── DARK STRIP ─────────────── */
+    .dark-strip {
+      background: var(--charcoal);
+      padding: 4rem 5%;
+    }
+
+    .dark-strip h2 { color: #fff; }
+    .dark-strip h2 em { color: var(--red-light); }
+    .dark-strip p { color: #7a7a88; }
+
+    /* ─────────────── FOOTER ─────────────── */
+    footer {
+      background: var(--charcoal);
+      padding: 2.5rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border-top: 1px solid #2a2a2e;
+    }
+
+    .footer-logo {
+      font-family: var(--display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .footer-logo span { color: var(--red-light); }
+    footer p { font-size: 0.78rem; color: #55555f; }
+
+    /* ─────────────── RESPONSIVE ─────────────── */
+    @media (max-width: 860px) {
+      .hero-wrap, .two-col, .contact-grid, .mini-cards { grid-template-columns: 1fr; gap: 2.5rem; }
+      .hero-image-wrap { height: 300px; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-cta { display: none; }
+    }
+
+    @media (max-width: 500px) {
+      .values-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════ NAV ══════════ -->
+  <nav>
+    <div class="nav-top">
+      <span class="nav-logo" onclick="showPage('home')">EN<span>EMS</span></span>
+      <a class="nav-cta" onclick="showPage('contact')" href="#">Join ENEMS</a>
+    </div>
+    <div class="tab-bar">
+      <button class="tab-btn active" data-page="home">Home</button>
+      <button class="tab-btn" data-page="about">About Us</button>
+      <button class="tab-btn" data-page="devices">Devices Team</button>
+      <button class="tab-btn" data-page="systems">Systems Team</button>
+      <button class="tab-btn" data-page="culture">Culture</button>
+      <button class="tab-btn" data-page="contact">Contact</button>
+    </div>
+  </nav>
+
+  <!-- ══════════ HOME ══════════ -->
+  <div class="page active" id="page-home">
+
+    <div class="hero-wrap">
+      <div>
+        <div class="hero-eyebrow">Engineering × EMS Innovation</div>
+        <h1>Solutions built for <em>real EMS environments</em></h1>
+        <p class="lead">ENEMS is a project-driven engineering and research team developing deployable solutions for prehospital care — at the intersection of device design, systems analysis, and clinical reasoning.</p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="showPage('devices')">Explore Our Teams</button>
+          <button class="btn-outline" onclick="showPage('about')">Learn More</button>
+        </div>
+      </div>
+      <div class="hero-image-wrap">
+        <img
+          src="https://images.unsplash.com/photo-1504439468489-c8920d796a29?w=900&auto=format&fit=crop&q=80"
+          alt="EMS paramedics in the field"
+          onerror="this.src='https://picsum.photos/seed/ems1/900/600'"
+        />
+        <div class="hero-badge">
+          <strong>Prehospital Innovation</strong>
+          <span>From concept to deployment</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stats-inner">
+        <div>
+          <div class="stat-num">2</div>
+          <div class="stat-label">Active Teams</div>
+        </div>
+        <div>
+          <div class="stat-num">Research</div>
+          <div class="stat-label">Driven</div>
+        </div>
+        <div>
+          <div class="stat-num">Field-Ready</div>
+          <div class="stat-label">Solutions</div>
+        </div>
+        <div>
+          <div class="stat-num">Student-Led</div>
+          <div class="stat-label">Innovation Lab</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mini-cards">
+      <div class="mini-card" onclick="showPage('devices')">
+        <div class="mini-card-label">Engineering Division</div>
+        <h3>Devices Team</h3>
+        <p>Builds medical solutions from the ground up — from literature review to functional, testable prototypes ready for deployment.</p>
+        <div class="mini-card-arrow">Explore → </div>
+      </div>
+      <div class="mini-card" onclick="showPage('systems')">
+        <div class="mini-card-label">Research Division</div>
+        <h3>Systems Team</h3>
+        <p>Identifies inefficiencies in EMS environments through rigorous systems analysis, protocol evaluation, and publishable research.</p>
+        <div class="mini-card-arrow">Explore →</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════ ABOUT ══════════ -->
+  <div class="page" id="page-about">
+
+    <div class="about-intro">
+      <div class="section-tag">About ENEMS</div>
+      <h1>An innovation lab, <em>not</em> a casual club</h1>
+      <p class="lead">Unlike traditional student organizations, ENEMS functions as a working innovation lab where every project is expected to move beyond ideation toward measurable implementation impact.</p>
+    </div>
+
+    <div class="about-body">
+      <div class="two-col" style="margin-bottom: 5rem;">
+        <div>
+          <p style="margin-bottom:1.2rem;">ENEMS operates at the intersection of device design, systems analysis, and clinical reasoning. We build solutions that work in real EMS environments — not just in theory.</p>
+          <p style="margin-bottom:1.2rem;">Members engage in structured problem identification, evidence review, prototyping, validation, and publication. Projects are not treated as theoretical exercises — each initiative requires ownership, documentation, and structured progression from problem definition to validated outcome.</p>
+          <p>ENEMS sits between a medical device startup, a clinical research lab, and a systems engineering unit — all within a student-led framework.</p>
+        </div>
+        <div class="img-block img-tall">
+          <img
+            src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=800&auto=format&fit=crop&q=80"
+            alt="Engineering team collaboration"
+            onerror="this.src='https://picsum.photos/seed/team1/800/600'"
+          />
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="two-col">
+        <div class="img-block img-med">
+          <img
+            src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&auto=format&fit=crop&q=80"
+            alt="Medical research lab"
+            onerror="this.src='https://picsum.photos/seed/lab1/800/500'"
+          />
+        </div>
+        <div>
+          <h2>How We <em>Work</em></h2>
+          <div class="bordered-card" style="margin-top:1.5rem;">
+            <h3>Our Core Principles</h3>
+            <ul class="arrow-list">
+              <li>Research-informed decision making</li>
+              <li>Iterative development and prototyping</li>
+              <li>Systems-level thinking</li>
+              <li>Cross-disciplinary collaboration</li>
+              <li>Measurable validation</li>
+              <li>Publication and knowledge dissemination</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════ DEVICES TEAM ══════════ -->
+  <div class="page" id="page-devices">
+    <div class="container">
+
+      <div class="two-col" style="margin-bottom:4rem;">
+        <div class="img-block img-tall">
+          <img
+            src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=800&auto=format&fit=crop&q=80"
+            alt="Medical device engineering"
+            onerror="this.src='https://picsum.photos/seed/device1/800/600'"
+          />
+        </div>
+        <div>
+          <div class="section-tag">Engineering Division</div>
+          <h1 style="font-size:clamp(2.2rem,4vw,3.5rem);">Devices <em>Team</em></h1>
+          <p style="margin-bottom:1.2rem;">The Devices Team builds medical solutions from the ground up. Projects begin with a defined operational gap in prehospital care and progress through structured development stages.</p>
+          <p style="margin-bottom:1.2rem;">Members conduct structured literature reviews, evaluate current standards, generate engineering concepts, and develop iterative prototypes. Emphasis is placed on real-world constraints — workflow integration, field durability, usability, and scalability.</p>
+          <p style="margin-bottom:2rem;">The goal is not concept design, but functional, testable systems ready for deployment pathways.</p>
+          <div class="tags">
+            <span class="tag">Prototyping</span>
+            <span class="tag">Device Design</span>
+            <span class="tag">Literature Review</span>
+            <span class="tag">Validation</span>
+            <span class="tag">Deployment Pathways</span>
+            <span class="tag">Field Durability</span>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="two-col">
+        <div>
+          <h2>What Members <em>Do</em></h2>
+          <p style="margin-bottom:1.5rem;">Each project follows a structured progression from problem identification to validated outcome. No theoretical exercises — only work with measurable implementation impact.</p>
+          <div class="bordered-card">
+            <h3>Project Lifecycle</h3>
+            <ul class="arrow-list">
+              <li>Define operational gap in prehospital care</li>
+              <li>Conduct structured literature review</li>
+              <li>Evaluate current standards and solutions</li>
+              <li>Generate and assess engineering concepts</li>
+              <li>Develop iterative prototypes</li>
+              <li>Validate against real-world constraints</li>
+              <li>Document and publish findings</li>
+            </ul>
+          </div>
+        </div>
+        <div class="img-block img-med">
+          <img
+            src="https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?w=800&auto=format&fit=crop&q=80"
+            alt="Prototyping and engineering"
+            onerror="this.src='https://picsum.photos/seed/proto1/800/500'"
+          />
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════ SYSTEMS TEAM ══════════ -->
+  <div class="page" id="page-systems">
+    <div class="container">
+
+      <div class="two-col" style="margin-bottom:4rem;">
+        <div>
+          <div class="section-tag">Research Division</div>
+          <h1 style="font-size:clamp(2.2rem,4vw,3.5rem);">Systems <em>Team</em></h1>
+          <p style="margin-bottom:1.2rem;">The Systems Team focuses on identifying inefficiencies and structural gaps within EMS environments. Their work spans workflow optimization, clinical protocol evaluation, and meta-analysis.</p>
+          <p style="margin-bottom:1.2rem;">The team produces structured analyses, performance evaluations, and publishable findings that strengthen evidence-based implementation and support broader institutional or policy-level improvements.</p>
+          <p style="margin-bottom:2rem;">Where the Devices Team builds things, the Systems Team asks: how can existing systems work better?</p>
+          <div class="tags">
+            <span class="tag">Systems Analysis</span>
+            <span class="tag">Meta-Analysis</span>
+            <span class="tag">Protocol Review</span>
+            <span class="tag">Workflow Optimization</span>
+            <span class="tag">Publication</span>
+            <span class="tag">Policy Impact</span>
+          </div>
+        </div>
+        <div class="img-block img-tall">
+          <img
+            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80"
+            alt="Data analysis and systems research"
+            onerror="this.src='https://picsum.photos/seed/data1/800/600'"
+          />
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="two-col">
+        <div class="img-block img-med">
+          <img
+            src="https://images.unsplash.com/photo-1543286386-713bdd548da4?w=800&auto=format&fit=crop&q=80"
+            alt="Research and analysis"
+            onerror="this.src='https://picsum.photos/seed/research1/800/500'"
+          />
+        </div>
+        <div>
+          <h2>Research <em>Focus Areas</em></h2>
+          <p style="margin-bottom:1.5rem;">Systems Team projects are grounded in rigorous evidence review and structured methodology. Every analysis is built toward a publishable, implementable outcome.</p>
+          <div class="bordered-card">
+            <h3>Core Work Areas</h3>
+            <ul class="arrow-list">
+              <li>Workflow optimization in prehospital settings</li>
+              <li>Clinical protocol evaluation and comparison</li>
+              <li>Systems-level inefficiency identification</li>
+              <li>Structured meta-analysis and literature synthesis</li>
+              <li>Performance evaluation and benchmarking</li>
+              <li>Institutional and policy-level recommendations</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════ CULTURE ══════════ -->
+  <div class="page" id="page-culture">
+    <div class="container">
+
+      <div style="max-width:680px; margin-bottom:3.5rem;">
+        <div class="section-tag">Culture &amp; Expectations</div>
+        <h1 style="font-size:clamp(2.2rem,4vw,3.8rem);">Built on <em>accountability</em> and execution</h1>
+        <p class="lead">Passion alone is not enough — it must translate into disciplined action. ENEMS is a structured innovation environment, not a casual club.</p>
+      </div>
+
+      <div class="quote-banner">
+        <img
+          src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1400&auto=format&fit=crop&q=80"
+          alt="EMS teamwork"
+          onerror="this.src='https://picsum.photos/seed/ems2/1400/400'"
+        />
+        <div class="quote-banner-overlay">
+          <blockquote>"Projects are not treated as theoretical exercises. Each initiative requires ownership, documentation, and structured progression from problem definition to validated outcome."</blockquote>
+        </div>
+      </div>
+
+      <h2 style="margin-top:3.5rem; margin-bottom:0.5rem;">Member <em>Expectations</em></h2>
+      <p style="margin-bottom:1.5rem;">This team functions only through sustained commitment and intellectual curiosity.</p>
+
+      <div class="values-grid">
+        <div class="value-item"><div class="value-dot"></div><p>Genuine interest in EMS, medical devices, or healthcare systems</p></div>
+        <div class="value-item"><div class="value-dot"></div><p>Take full ownership of defined responsibilities</p></div>
+        <div class="value-item"><div class="value-dot"></div><p>Contribute consistently, not sporadically</p></div>
+        <div class="value-item"><div class="value-dot"></div><p>Engage seriously with literature and evidence</p></div>
+        <div class="value-item"><div class="value-dot"></div><p>Be invested in real outcomes, not résumé building</p></div>
+        <div class="value-item"><div class="value-dot"></div><p>Sustained commitment and intellectual curiosity</p></div>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="two-col">
+        <div>
+          <h2>Our <em>Positioning</em></h2>
+          <p style="margin-bottom:1.5rem;">ENEMS is designed to develop technically rigorous solutions, produce publishable work, and bridge engineering with clinical execution.</p>
+          <div class="bordered-card">
+            <h3>ENEMS sits between:</h3>
+            <ul class="arrow-list">
+              <li>A medical device startup</li>
+              <li>A clinical research lab</li>
+              <li>A systems engineering unit</li>
+            </ul>
+            <p style="margin-top:1rem; font-size:0.85rem; color:var(--muted);">All within a student-led framework.</p>
+          </div>
+        </div>
+        <div class="img-block img-med">
+          <img
+            src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&auto=format&fit=crop&q=80"
+            alt="Medical innovation culture"
+            onerror="this.src='https://picsum.photos/seed/culture1/800/500'"
+          />
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════ CONTACT ══════════ -->
+  <div class="page" id="page-contact">
+    <div class="container">
+
+      <div class="contact-grid">
+        <div>
+          <div class="section-tag">Get Involved</div>
+          <h1 style="font-size:clamp(2rem,3.5vw,3.2rem);">Join the <em>team</em></h1>
+          <p style="margin-bottom:2rem;">We're looking for driven individuals who want to do meaningful work at the intersection of engineering and prehospital care.</p>
+
+          <div class="contact-detail">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+            </svg>
+            contact@enems.org
+          </div>
+
+          <div class="img-block img-med" style="margin-top:2.5rem;">
+            <img
+              src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=700&auto=format&fit=crop&q=80"
+              alt="Join the ENEMS team"
+              onerror="this.src='https://picsum.photos/seed/join1/700/400'"
+            />
+          </div>
+        </div>
+
+        <div>
+          <form id="contact-form" onsubmit="handleSubmit(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label>First Name</label>
+                <input type="text" placeholder="Jane" required />
+              </div>
+              <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" placeholder="Smith" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" placeholder="you@university.edu" required />
+            </div>
+            <div class="form-group">
+              <label>Area of Interest</label>
+              <select>
+                <option value="">Select a team...</option>
+                <option>Devices Team</option>
+                <option>Systems Team</option>
+                <option>Both / Undecided</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Tell us about yourself</label>
+              <textarea placeholder="Your background, relevant skills, and what draws you to EMS innovation..."></textarea>
+            </div>
+            <button type="submit" class="form-submit">Submit Application</button>
+          </form>
+          <p id="form-success" style="display:none; margin-top:1.2rem; font-size:0.95rem; color:var(--red); font-weight:500;">✓ Thanks! We'll be in touch soon.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════ FOOTER ══════════ -->
+  <footer>
+    <span class="footer-logo" onclick="showPage('home')">EN<span>EMS</span></span>
+    <p>© 2025 ENEMS — Engineering × EMS Innovation. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function showPage(name) {
+      // Hide all pages
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      // Deactivate all tabs
+      document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+      // Show selected page
+      document.getElementById('page-' + name).classList.add('active');
+      // Activate matching tab
+      const tab = document.querySelector('.tab-btn[data-page="' + name + '"]');
+      if (tab) tab.classList.add('active');
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Wire up tab buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => showPage(btn.dataset.page));
+    });
+
+    // Form submit
+    function handleSubmit(e) {
+      e.preventDefault();
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
